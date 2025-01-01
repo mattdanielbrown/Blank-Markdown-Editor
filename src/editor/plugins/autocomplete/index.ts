@@ -1,13 +1,13 @@
-import { Plugin, TextSelection } from 'prosemirror-state';
+import { Plugin, TextSelection } from "prosemirror-state";
 
-import transformers from './transformers';
+import transformers from "./transformers";
 
 export default () => {
   return new Plugin({
     props: {
       handleKeyDown: (view, event) => {
         if (
-          event.key !== ' ' ||
+          event.key !== " " ||
           event.shiftKey ||
           event.ctrlKey ||
           event.metaKey ||

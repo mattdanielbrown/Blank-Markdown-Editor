@@ -1,44 +1,35 @@
-/**
- * @vitest-environment jsdom
- */
-import { clearMocks, mockWindows } from '@tauri-apps/api/mocks';
-import {
-  afterEach,
-  assert,
-  beforeEach,
-  describe,
-  expect,
-  it,
-  vi,
-} from 'vitest';
+// @vitest-environment jsdom
+import { clearMocks, mockWindows } from "@tauri-apps/api/mocks";
+import { afterEach, assert, beforeEach, describe, expect, it } from "vitest";
 
-import { toggleTheme } from '../../src/editor/commands';
-import { theme } from '../../src/state';
+import { toggleTheme } from "../../src/editor/commands";
+import { theme } from "../../src/state";
+import { EditorState } from "prosemirror-state";
 
-describe('command.toggleTheme', () => {
+describe("command.toggleTheme", () => {
   beforeEach(() => {
-    mockWindows('main');
+    mockWindows("main");
   });
 
   afterEach(() => {
     clearMocks();
   });
 
-  it('toggles', () => {
+  it("toggles", () => {
     expect(window).toBeDefined();
 
     const bodyTheme = () => document.body.dataset.theme;
-    assert.equal(theme.value, 'dark');
+    assert.equal(theme.value, "dark");
     assert.equal(bodyTheme(), undefined);
 
-    toggleTheme()();
+    toggleTheme()(new EditorState());
 
-    assert.equal(theme.value, 'light');
-    assert.equal(bodyTheme(), 'light');
+    assert.equal(theme.value, "light");
+    assert.equal(bodyTheme(), "light");
 
-    toggleTheme()();
+    toggleTheme()(new EditorState());
 
-    assert.equal(theme.value, 'dark');
-    assert.equal(bodyTheme(), 'dark');
+    assert.equal(theme.value, "dark");
+    assert.equal(bodyTheme(), "dark");
   });
 });

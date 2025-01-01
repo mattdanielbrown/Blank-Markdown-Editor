@@ -1,9 +1,9 @@
 const textStyleMixin = (
-  fontSize,
+  fontSize: number,
   options: {
     italics?: boolean;
     bold?: boolean;
-    decoration?: 'underline';
+    decoration?: "underline";
     margin?: number[];
   } = {},
 ) => ({
@@ -15,7 +15,7 @@ const textStyleMixin = (
 
 export const BASE_DOCUMENT = {
   defaultStyle: {
-    font: 'DejaVu Sans',
+    font: "DejaVu Sans",
   },
   styles: {
     paragraph: textStyleMixin(10, { margin: [0, 0, 0, 10] }),

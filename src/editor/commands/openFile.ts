@@ -1,18 +1,18 @@
-import { Command } from 'prosemirror-state';
-import { defaultMarkdownParser } from 'prosemirror-markdown';
+import type { Command } from "prosemirror-state";
+import { defaultMarkdownParser } from "prosemirror-markdown";
 
-import { open } from '@tauri-apps/api/dialog';
-import { readTextFile } from '@tauri-apps/api/fs';
-import { sendNotification } from '@tauri-apps/api/notification';
+import { open } from "@tauri-apps/plugin-dialog";
+import { readTextFile } from "@tauri-apps/plugin-fs";
+import { sendNotification } from "@tauri-apps/plugin-notification";
 
-import { path } from '../../state';
+import { path } from "../../state";
 
 export default (): Command => (state, dispatch) => {
   (async () => {
     const newPath = await open({
-      filters: [{ name: 'Markdown', extensions: ['md'] }],
+      filters: [{ name: "Markdown", extensions: ["md"] }],
     });
-    if (typeof newPath === 'string') {
+    if (typeof newPath === "string") {
       path.value = newPath;
       const content = await readTextFile(path.value);
       const doc = defaultMarkdownParser.parse(content);

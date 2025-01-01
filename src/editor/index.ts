@@ -1,14 +1,16 @@
-import { EditorState } from 'prosemirror-state';
-import { EditorView } from 'prosemirror-view';
-import { history } from 'prosemirror-history';
-import { defaultMarkdownParser, schema } from 'prosemirror-markdown';
+import { EditorState } from "prosemirror-state";
+import { EditorView } from "prosemirror-view";
+import { history } from "prosemirror-history";
+import { defaultMarkdownParser, schema } from "prosemirror-markdown";
 
-import { transaction } from '../state';
-import { restoreDocument } from '../storage';
+import { transaction } from "../state";
+import { restoreDocument } from "../storage";
 
-import welcomeMessage from './welcome.md?raw';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+import welcomeMessage from "./welcome.md?raw";
 
-import { autocomplete, keymap } from './plugins';
+import { autocomplete, keymap } from "./plugins";
 
 export const bootEditor = async () => {
   const doc = await restoreDocument();

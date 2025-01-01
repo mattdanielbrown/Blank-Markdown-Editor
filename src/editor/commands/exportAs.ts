@@ -1,37 +1,38 @@
-import { Command } from 'prosemirror-state';
+import type { Command } from "prosemirror-state";
 
-import { DialogFilter, save } from '@tauri-apps/api/dialog';
-import { writeBinaryFile } from '@tauri-apps/api/fs';
-import { sendNotification } from '@tauri-apps/api/notification';
+import { type DialogFilter, save } from "@tauri-apps/plugin-dialog";
+import { writeFile } from "@tauri-apps/plugin-fs";
+import { sendNotification } from "@tauri-apps/plugin-notification";
 
-import { exporterFunc } from '../../exporters';
+import { type exporterFunc } from "../../exporters";
 
 export default (
     title: string,
     exporter: exporterFunc,
-    filters?: DialogFilter,
+    filters?: DialogFilter[],
   ): Command =>
   (state) => {
     const isEmpty =
-      (document.querySelector('.ProseMirror')?.textContent ?? '').trim()
+      (document.querySelector(".ProseMirror")?.textContent ?? "").trim()
         .length === 0;
 
     if (isEmpty) {
       sendNotification({
         title,
-        body: 'Your document is empty. There is nothing to export.',
+        body: "Your document is empty. There is nothing to export.",
       });
       return false;
     }
 
     (async () => {
       const dest = await save({ filters });
+      
       if (dest === null) {
         return false;
       }
 
       const contents = await exporter(state);
-      await writeBinaryFile(dest, contents);
+      await writeFile(dest, contents);
 
       return true;
     })()
@@ -39,7 +40,7 @@ export default (
         if (isExported) {
           sendNotification({
             title,
-            body: 'Your file has been exported',
+            body: "Your file has been exported",
           });
         }
       })

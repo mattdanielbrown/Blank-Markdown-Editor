@@ -1,15 +1,15 @@
-import { TextSelection } from 'prosemirror-state';
-import { EditorView } from 'prosemirror-view';
+import { TextSelection } from "prosemirror-state";
+import { EditorView } from "prosemirror-view";
 
-import { activator, transformer, Transformer } from '../types';
+import type { activator, transformer, Transformer } from "../types";
 
 const replaceMap: { [key: string]: string } = {
-  '-->': '→',
-  '<--': '←',
-  '==>': '⇒',
-  '<==': '⇐',
-  '<==>': '⇔',
-  '--': '—',
+  "-->": "→",
+  "<--": "←",
+  "==>": "⇒",
+  "<==": "⇐",
+  "<==>": "⇔",
+  "--": "—",
 };
 
 interface Props {
@@ -19,7 +19,7 @@ interface Props {
 
 const activate: activator<Props> = (text: string): undefined | Props => {
   for (const [key, value] of Object.entries(replaceMap)) {
-    if (text === key || text.endsWith(' ' + key)) {
+    if (text === key || text.endsWith(" " + key)) {
       return { key, value };
     }
   }
@@ -27,14 +27,15 @@ const activate: activator<Props> = (text: string): undefined | Props => {
 
 const transform: transformer<Props> = (
   view: EditorView,
-  text,
+  _,
   { key, value },
 ): boolean => {
   const { $cursor } = view.state.selection as TextSelection;
+  if (!$cursor) return false;
   view.dispatch(
     view.state.tr
       .delete($cursor.pos - key.length, $cursor.pos)
-      .insertText(value + ' ')
+      .insertText(value + " ")
       .scrollIntoView(),
   );
   return true;

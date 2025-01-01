@@ -1,4 +1,3 @@
-import { BinaryFileContents } from '@tauri-apps/api/fs';
-import { EditorState } from 'prosemirror-state';
+import { EditorState } from "prosemirror-state";
 
-export type exporterFunc = (state: EditorState) => Promise<BinaryFileContents>;
+export type exporterFunc = (state: EditorState) => Promise<Uint8Array | ReadableStream<Uint8Array>>;

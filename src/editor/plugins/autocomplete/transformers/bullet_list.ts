@@ -1,11 +1,11 @@
-import { TextSelection, Transaction } from 'prosemirror-state';
-import { EditorView } from 'prosemirror-view';
-import { wrapInList } from 'prosemirror-schema-list';
-import { schema } from 'prosemirror-markdown';
+import { TextSelection, Transaction } from "prosemirror-state";
+import { EditorView } from "prosemirror-view";
+import { wrapInList } from "prosemirror-schema-list";
+import { schema } from "prosemirror-markdown";
 
-import { activator, transformer, Transformer } from '../types';
+import type { activator, transformer, Transformer } from "../types";
 
-const cmd = '-';
+const cmd = "-";
 
 type Props = boolean;
 
@@ -15,7 +15,7 @@ const activate: activator<Props> = (text: string): Props | undefined => {
 
 const transform: transformer<Props> = (
   view: EditorView,
-  text: string,
+  _: string,
 ): boolean => {
   if (
     wrapInList(schema.nodes.bullet_list)(
@@ -25,6 +25,7 @@ const transform: transformer<Props> = (
     )
   ) {
     const { $cursor } = view.state.selection as TextSelection;
+    if (!$cursor) return false;
     view.dispatch(
       view.state.tr
         .delete($cursor.pos - cmd.length, $cursor.pos)

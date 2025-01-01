@@ -1,4 +1,4 @@
-import { EditorView } from 'prosemirror-view';
+import { EditorView } from "prosemirror-view";
 
 export type activator<T> = (text: string) => undefined | T;
 export type transformer<T> = (

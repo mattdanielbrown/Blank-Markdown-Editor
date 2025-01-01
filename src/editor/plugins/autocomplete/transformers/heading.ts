@@ -1,8 +1,8 @@
-import { TextSelection } from 'prosemirror-state';
-import { EditorView } from 'prosemirror-view';
-import { schema } from 'prosemirror-markdown';
+import { TextSelection } from "prosemirror-state";
+import { EditorView } from "prosemirror-view";
+import { schema } from "prosemirror-markdown";
 
-import { activator, transformer, Transformer } from '../types';
+import type { activator, transformer, Transformer } from "../types";
 
 const reHeading = /^#{1,6}$/g;
 
@@ -25,6 +25,7 @@ const transform: transformer<Props> = (
   const node = schema.nodes.heading.create({ level });
 
   const { $cursor } = view.state.selection as TextSelection;
+  if (!$cursor) return false;
   view.dispatch(
     view.state.tr
       .replaceRangeWith($cursor.pos - text.length, $cursor.pos, node)
@@ -32,6 +33,7 @@ const transform: transformer<Props> = (
   );
 
   const sel = view.state.selection as TextSelection;
+  if (!sel.$cursor) return false;
   const endPos = sel.$cursor?.before() - 1;
   const selection = new TextSelection(view.state.doc.resolve(endPos));
 

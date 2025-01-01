@@ -1,9 +1,9 @@
 import {
   isPermissionGranted,
   requestPermission,
-} from '@tauri-apps/api/notification';
+} from "@tauri-apps/plugin-notification";
 
-import { path, textContent } from './state';
+import { path, textContent } from "./state";
 
 export const setupNotification = async () => {
   const hasPermission = await isPermissionGranted();
@@ -13,18 +13,18 @@ export const setupNotification = async () => {
 };
 
 export const bootUI = () => {
-  const uiTop = document.createElement('div');
-  uiTop.id = 'ui-top';
+  const uiTop = document.createElement("div");
+  uiTop.id = "ui-top";
   document.body.appendChild(uiTop);
   path.subscribe(
     (path) => {
-      uiTop.innerHTML = '&raquo; ' + (path ?? 'Untitled');
+      uiTop.innerHTML = "&raquo; " + (path ?? "Untitled");
     },
     { immediate: true },
   );
 
-  const uiBottom = document.createElement('div');
-  uiBottom.id = 'ui-bottom';
+  const uiBottom = document.createElement("div");
+  uiBottom.id = "ui-bottom";
   document.body.appendChild(uiBottom);
   textContent.subscribe(
     (content) => {

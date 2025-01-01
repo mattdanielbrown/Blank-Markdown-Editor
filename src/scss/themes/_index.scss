@@ -1,5 +1,5 @@
-@import 'light';
-@import 'dark';
+@use 'light';
+@use 'dark';
 
 body {
   color: var(--color);
