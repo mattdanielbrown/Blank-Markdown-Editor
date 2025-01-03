@@ -15,16 +15,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: oven-sh/setup-bun@v2
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
 
       - name: setup node
         uses: actions/setup-node@v4
         with:
           node-version: 18.19
-
-      - name: install Rust stable
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
 
       - name: install dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-latest'
