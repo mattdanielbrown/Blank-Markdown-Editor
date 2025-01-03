@@ -17,7 +17,7 @@ export const bootEditor = async () => {
   const state = EditorState.create({
     doc: doc ?? defaultMarkdownParser.parse(welcomeMessage),
     schema,
-    plugins: [history(), keymap, autocomplete()],
+    plugins: [history(), keymap(), autocomplete()],
   });
   const view = new EditorView(document.body, {
     state,

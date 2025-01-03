@@ -1,4 +1,4 @@
-import { keymap } from "prosemirror-keymap";
+import { keymap as _keymap } from "prosemirror-keymap";
 import { undo, redo } from "prosemirror-history";
 import {
   baseKeymap,
@@ -25,39 +25,73 @@ import {
 } from "../commands";
 
 import * as exporters from "../../exporters";
+import { CommandIdentifier, getKeyBinding } from "../../config";
+import { Command } from "prosemirror-state";
 
-export default keymap({
-  ...baseKeymap,
-  "Mod-z": undo,
-  "Mod-Shift-z": redo,
-  "Mod-0": setBlockType(schema.nodes.paragraph),
-  "Mod-1": setBlockType(schema.nodes.heading, { level: 1 }),
-  "Mod-2": setBlockType(schema.nodes.heading, { level: 2 }),
-  "Mod-3": setBlockType(schema.nodes.heading, { level: 3 }),
-  "Mod-4": setBlockType(schema.nodes.heading, { level: 4 }),
-  "Mod-5": setBlockType(schema.nodes.heading, { level: 5 }),
-  "Mod-6": setBlockType(schema.nodes.heading, { level: 6 }),
-  "Mod-8": wrapInList(schema.nodes.bullet_list),
-  "Mod-9": wrapInList(schema.nodes.ordered_list),
-  Enter: chainCommands(splitListItem(schema.nodes.list_item), baseKeymap.Enter),
-  "Mod-Enter": insertNode(schema.nodes.hard_break),
-  "Shift-Enter": insertNode(schema.nodes.hard_break),
-  "Mod-h": insertNode(schema.nodes.horizontal_rule),
-  Tab: sinkListItem(schema.nodes.list_item),
-  "Shift-Tab": liftListItem(schema.nodes.list_item),
-  "Mod-b": toggleMark(schema.marks.strong),
-  "Mod-i": toggleMark(schema.marks.em),
-  "Mod-g": toggleMark(schema.marks.code),
-  "Mod-c": wrapIn(schema.nodes.blockquote),
-  "Mod-n": newFile(),
-  "Mod-s": saveFile(),
-  "Mod-Shift-s": saveFile({ force: true }),
-  "Mod-Alt-p": exportAs("PDF-Export", exporters.toPDF, [
+const commandMap: { [key in CommandIdentifier]: Command } = {
+  [CommandIdentifier.UNDO]: undo,
+  [CommandIdentifier.REDO]: redo,
+  [CommandIdentifier.BLOCKTYPE_PARAGRAPH]: setBlockType(schema.nodes.paragraph),
+  [CommandIdentifier.BLOCKTYPE_HEADING1]: setBlockType(schema.nodes.heading, {
+    level: 1,
+  }),
+  [CommandIdentifier.BLOCKTYPE_HEADING2]: setBlockType(schema.nodes.heading, {
+    level: 2,
+  }),
+  [CommandIdentifier.BLOCKTYPE_HEADING3]: setBlockType(schema.nodes.heading, {
+    level: 3,
+  }),
+  [CommandIdentifier.BLOCKTYPE_HEADING4]: setBlockType(schema.nodes.heading, {
+    level: 4,
+  }),
+  [CommandIdentifier.BLOCKTYPE_HEADING5]: setBlockType(schema.nodes.heading, {
+    level: 5,
+  }),
+  [CommandIdentifier.BLOCKTYPE_HEADING6]: setBlockType(schema.nodes.heading, {
+    level: 6,
+  }),
+  [CommandIdentifier.BLOCKTYPE_BULLET_LIST]: wrapInList(
+    schema.nodes.bullet_list,
+  ),
+  [CommandIdentifier.BLOCKTYPE_ORDERED_LIST]: wrapInList(
+    schema.nodes.ordered_list,
+  ),
+  [CommandIdentifier.INSERT_HORIZONTAL_RULE]: insertNode(
+    schema.nodes.horizontal_rule,
+  ),
+  [CommandIdentifier.FORMAT_INDENT]: sinkListItem(schema.nodes.list_item),
+  [CommandIdentifier.FORMAT_UNINDENT]: liftListItem(schema.nodes.list_item),
+  [CommandIdentifier.FORMAT_BOLD]: toggleMark(schema.marks.strong),
+  [CommandIdentifier.FORMAT_ITALIC]: toggleMark(schema.marks.em),
+  [CommandIdentifier.FORMAT_CODE]: toggleMark(schema.marks.code),
+  [CommandIdentifier.FORMAT_BLOCKQUOTE]: wrapIn(schema.nodes.blockquote),
+  [CommandIdentifier.FILE_NEW]: newFile(),
+  [CommandIdentifier.FILE_SAVE]: saveFile(),
+  [CommandIdentifier.FILE_SAVE_AS]: saveFile({ force: true }),
+  [CommandIdentifier.FILE_OPEN]: openFile(),
+  [CommandIdentifier.EXPORT_PDF]: exportAs("PDF-Export", exporters.toPDF, [
     { name: "PDF-File", extensions: ["pdf"] },
   ]),
-  // 'Mod-Alt-d': exportAs('Docx-Export', exporters.toDocx, [
-  //   { name: 'Docx-File', extensions: ['docx'] },
-  // ]),
-  "Mod-o": openFile(),
-  "Mod-Alt-t": toggleTheme(),
-});
+  [CommandIdentifier.THEME_TOGGLE]: toggleTheme(),
+};
+
+export const keymap = () =>
+  _keymap({
+    ...baseKeymap,
+
+    ...Object.keys(commandMap).reduce(
+      (acc: { [key: string]: Command }, key: string) => {
+        acc[getKeyBinding(key as CommandIdentifier)] =
+          commandMap[key as CommandIdentifier];
+        return acc;
+      },
+      {},
+    ),
+
+    Enter: chainCommands(
+      splitListItem(schema.nodes.list_item),
+      baseKeymap.Enter,
+    ),
+    "Mod-Enter": insertNode(schema.nodes.hard_break),
+    "Shift-Enter": insertNode(schema.nodes.hard_break),
+  });

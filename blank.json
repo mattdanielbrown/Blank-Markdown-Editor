@@ -1,0 +1,28 @@
+{
+  "keymap": {
+    "undo": "Mod-z",
+    "redo": "Mod-Shift-z",
+    "blocktype.paragraph": "Mod-0",
+    "blocktype.heading1": "Mod-1",
+    "blocktype.heading2": "Mod-2",
+    "blocktype.heading3": "Mod-3",
+    "blocktype.heading4": "Mod-4",
+    "blocktype.heading5": "Mod-5",
+    "blocktype.heading6": "Mod-6",
+    "blocktype.bullet_list": "Mod-8",
+    "blocktype.ordered_list": "Mod-9",
+    "insert.horizontal_rule": "Mod-h",
+    "format.indent": "Tab",
+    "format.unindent": "Shift-Tab",
+    "format.bold": "Mod-d",
+    "format.italic": "Mod-i",
+    "format.code": "Mod-c",
+    "format.blockquote": "Mod-g",
+    "file.new": "Mod-n",
+    "file.save": "Mod-s",
+    "file.save_as": "Mod-Shift-s",
+    "file.open": "Mod-o",
+    "export.pdf": "Mod-Alt-p",
+    "theme.toggle": "Mod-Alt-t"
+  }
+}

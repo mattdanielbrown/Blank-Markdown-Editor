@@ -64,36 +64,39 @@ You can download the latest version of Blank here:
   </tr>
 </table>
 
-## Keyboard Shortcuts
+## Keyboard Bindings
 
-Mod translates to Ctrl under Windows / Linux or Cmd on Mac.
+In order to change the keyboard bindings copy your modified version of the default configuration file (`blank.json`) of this repository into the app config dir (default: `~/.config/com.github.fpurchess.blank/blank.json`).
 
-| Keyboard Shortcut           | Action                       |
-| --------------------------- | ---------------------------- |
-| Mod + N                     | New File                     |
-| Mod + S                     | Save File                    |
-| Mod + Shift + S             | Save as                      |
-| Mod + O                     | Open File                    |
-| Mod + Alt + P               | Export as PDF                |
-| Mod + Alt + T               | Toggle Theme (Dark / Light)  |
-| Mod + Z                     | Undo                         |
-| Mod + Shift + Z             | Redo                         |
-| Mod + Enter / Shift + Enter | Insert line break            |
-| Mod + 0                     | Paragraph                    |
-| Mod + 1                     | Heading Level 1              |
-| Mod + 2                     | Heading Level 2              |
-| Mod + 3                     | Heading Level 3              |
-| Mod + 4                     | Heading Level 4              |
-| Mod + 5                     | Heading Level 5              |
-| Mod + 6                     | Heading Level 6              |
-| Mod + 8                     | Bullet List                  |
-| Mod + 9                     | Numbered List                |
-| Tab                         | Increase indent of list item |
-| Shift + Tab                 | Decrease indent of list item |
-| Mod + H                     | Blockquote                   |
-| Mod + G                     | Toggle code                  |
-| Mod + B                     | Toggle bold                  |
-| Mod + I                     | Toggle italic                |
+`Mod` translates to `Ctrl` under Windows / Linux or `Cmd` on Mac.
+
+| Command                      | Keyboard Binding            |
+| ---------------------------- | --------------------------- |
+| New File                     | Mod + N                     |
+| Save File                    | Mod + S                     |
+| Save as                      | Mod + Shift + S             |
+| Open File                    | Mod + O                     |
+| Export as PDF                | Mod + Alt + P               |
+| Toggle Theme (Dark / Light)  | Mod + Alt + T               |
+| Undo                         | Mod + Z                     |
+| Redo                         | Mod + Shift + Z             |
+| Insert line break            | Mod + Enter / Shift + Enter |
+| Paragraph                    | Mod + 0                     |
+| Heading Level 1              | Mod + 1                     |
+| Heading Level 2              | Mod + 2                     |
+| Heading Level 3              | Mod + 3                     |
+| Heading Level 4              | Mod + 4                     |
+| Heading Level 5              | Mod + 5                     |
+| Heading Level 6              | Mod + 6                     |
+| Bullet List                  | Mod + 8                     |
+| Numbered List                | Mod + 9                     |
+| Increase indent of list item | Tab                         |
+| Decrease indent of list item | Shift + Tab                 |
+| Insert Horizontal Line       | Mod + H                     |
+| Blockquote                   | Mod + G                     |
+| Toggle code                  | Mod + C                     |
+| Toggle bold                  | Mod + B                     |
+| Toggle italic                | Mod + I                     |
 
 ## Contributing
 

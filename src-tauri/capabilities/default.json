@@ -21,7 +21,7 @@
     },
     {
       "identifier": "fs:read-all",
-      "allow": [{ "path": "/**" }]
+      "allow": [{ "path": "/**" }, { "path": "$APPCONFIG/*" }]
     }
   ]
 }
