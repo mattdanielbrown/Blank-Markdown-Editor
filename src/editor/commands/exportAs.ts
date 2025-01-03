@@ -26,7 +26,7 @@ export default (
 
     (async () => {
       const dest = await save({ filters });
-      
+
       if (dest === null) {
         return false;
       }
