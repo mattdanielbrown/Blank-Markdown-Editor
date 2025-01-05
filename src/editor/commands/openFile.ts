@@ -1,28 +1,26 @@
 import type { Command } from "prosemirror-state";
-import { defaultMarkdownParser } from "prosemirror-markdown";
 
 import { open } from "@tauri-apps/plugin-dialog";
-import { readTextFile } from "@tauri-apps/plugin-fs";
 import { sendNotification } from "@tauri-apps/plugin-notification";
 
-import { path } from "../../state";
+import { readDocumentFromFile } from "../document";
 
-export default (): Command => (state, dispatch) => {
+const defaultOpenDialogOptions = {
+  filters: [{ name: "Markdown", extensions: ["md"] }],
+};
+
+export default (): Command => (state) => {
   (async () => {
-    const newPath = await open({
-      filters: [{ name: "Markdown", extensions: ["md"] }],
-    });
-    if (typeof newPath === "string") {
-      path.value = newPath;
-      const content = await readTextFile(path.value);
-      const doc = defaultMarkdownParser.parse(content);
-      if (dispatch && doc !== null) {
-        dispatch(state.tr.replaceWith(0, state.doc.content.size, doc));
-      }
+    let newPath: string | null = null;
+    try {
+      newPath = await open(defaultOpenDialogOptions);
+    } catch (err) {
+      console.error(`Failed to open file: ${JSON.stringify(err)}`);
+      sendNotification(`Failed to open file: ${JSON.stringify(err)}`);
+      return;
     }
-  })().catch((err) => {
-    sendNotification(`Failed to open file: ${JSON.stringify(err)}`);
-  });
+    if (newPath) await readDocumentFromFile(state, newPath);
+  })();
 
   return true;
 };

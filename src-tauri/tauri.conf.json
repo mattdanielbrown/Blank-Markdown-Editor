@@ -25,6 +25,23 @@
       "csp": null
     }
   },
+  "plugins": {
+    "fs": {
+      "requireLiteralLeadingDot": false
+    },
+    "cli": {
+      "description": "Blank is a minimalist, opinionated markdown editor made for writing",
+      "args": [
+        {
+          "name": "path",
+          "description": "The file path to open",
+          "index": 1,
+          "takesValue": true,
+          "required": false
+        }
+      ]
+    }
+  },
   "bundle": {
     "active": true,
     "targets": "all",

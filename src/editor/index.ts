@@ -1,24 +1,19 @@
 import { EditorState } from "prosemirror-state";
 import { EditorView } from "prosemirror-view";
 import { history } from "prosemirror-history";
-import { defaultMarkdownParser, schema } from "prosemirror-markdown";
+import { schema } from "prosemirror-markdown";
 
 import { transaction } from "../state";
-import { restoreDocument } from "../storage";
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-import welcomeMessage from "./welcome.md?raw";
-
 import { autocomplete, keymap } from "./plugins";
+import { applyInitialDocument } from "./document";
 
 export const bootEditor = async () => {
-  const doc = await restoreDocument();
-  const state = EditorState.create({
-    doc: doc ?? defaultMarkdownParser.parse(welcomeMessage),
-    schema,
-    plugins: [history(), keymap(), autocomplete()],
-  });
+  const state = await applyInitialDocument(
+    EditorState.create({
+      schema,
+      plugins: [history(), keymap(), autocomplete()],
+    }),
+  );
   const view = new EditorView(document.body, {
     state,
     handleDOMEvents: {
