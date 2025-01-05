@@ -9,19 +9,18 @@
     "core:default",
     "opener:default",
     "notification:default",
-    "fs:default",
     "dialog:default",
+    "cli:default",
+    "fs:read-all",
+    "fs:write-all",
+    "fs:allow-rename",
+    "fs:allow-mkdir",
+    "fs:allow-exists",
+    "fs:allow-watch",
+    "fs:read-dirs",
     {
       "identifier": "fs:scope",
-      "allow": [{ "path": "/**" }]
-    },
-    {
-      "identifier": "fs:write-all",
-      "allow": [{ "path": "/**" }]
-    },
-    {
-      "identifier": "fs:read-all",
-      "allow": [{ "path": "/**" }, { "path": "$APPCONFIG/*" }]
+      "allow": ["**/*"]
     }
   ]
 }
