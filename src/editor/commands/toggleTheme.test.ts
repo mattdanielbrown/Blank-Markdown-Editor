@@ -1,10 +1,10 @@
-// @vitest-environment jsdom
-import { clearMocks, mockWindows } from "@tauri-apps/api/mocks";
 import { afterEach, assert, beforeEach, describe, expect, it } from "vitest";
-
-import { toggleTheme } from "../../src/editor/commands";
-import { theme } from "../../src/state";
 import { EditorState } from "prosemirror-state";
+
+import { clearMocks, mockWindows } from "@tauri-apps/api/mocks";
+
+import { toggleTheme } from ".";
+import { theme } from "../../state";
 
 describe("command.toggleTheme", () => {
   beforeEach(() => {

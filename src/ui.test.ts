@@ -1,11 +1,12 @@
-// @vitest-environment jsdom
 import { assert, describe, expect, it, beforeAll } from "vitest";
 
-import { bootUI } from "../src/ui";
-import { path, textContent } from "../src/state";
+import { bootUI } from "./ui";
+import { path, textContent } from "./state";
 
 beforeAll(() => {
   expect(window).toBeDefined();
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   window.Notification = {
     permission: "granted",
   };
