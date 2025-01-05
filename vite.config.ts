@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
+import { configDefaults } from "vitest/config";
 
-// @ts-expect-error process is a nodejs global
 const host = process.env.TAURI_DEV_HOST;
 
 // https://vitejs.dev/config/
@@ -24,6 +24,17 @@ export default defineConfig(async () => ({
     watch: {
       // 3. tell vite to ignore watching `src-tauri`
       ignored: ["**/src-tauri/**"],
+    },
+  },
+
+  test: {
+    global: true,
+    setupFiles: ["./src/vitest.setup.ts"],
+    environment: "jsdom",
+    mockReset: true,
+    coverage: {
+      include: ["**/src/**"],
+      exclude: ["**/src-tauri/**"],
     },
   },
 }));
