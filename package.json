@@ -42,7 +42,7 @@
     "localforage": "^1.10.0",
     "markdown-it": "^13.0.2",
     "observable.ts": "^1.0.1",
-    "pdfmake": "0.3.0-beta.2",
+    "pdfmake": "0.3.0",
     "prosemirror-commands": "^1.6.2",
     "prosemirror-history": "^1.4.1",
     "prosemirror-keymap": "^1.2.2",
